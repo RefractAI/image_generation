@@ -1,0 +1,28 @@
+dataset:
+  type: flowers
+  flowers:
+    path: nkirschi/oxford-flowers
+    split: train
+    image_field: image
+    label_field: label
+processing:
+  bucket_size: 16
+  save_threshold: 2000
+  min_caption_length: 0
+  multires: false
+output:
+  cache_dir: cache256_flowers
+vae:
+  path: vae
+  class_name: AutoencoderKLVAE
+
+caption_text_lookup:
+  type: null
+  path: null
+alt_text_lookup:
+  type: null
+  path: null
+
+dataloader:
+  max_workers: 32
+aspect_ratio_bucket: 256

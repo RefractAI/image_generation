@@ -1,0 +1,39 @@
+# Cache config for ImageNet-1k (256px) from HF Parquet shards
+#
+# Expected input: Parquet shards with columns `image` and `label`.
+# Class names are read from the `label` column metadata when available.
+#
+# Environment variables: none required (absolute paths used below).
+
+dataset:
+  type: hf_parquet
+  hf_parquet:
+    # Glob for all train shards
+    data_files: imagenet256/data/train-*.parquet
+    image_field: image
+    label_field: label
+
+processing:
+  bucket_size: 256
+  save_threshold: 20000
+  min_caption_length: 0
+  multires: false
+
+output:
+  cache_dir: cache256_imagenet
+
+vae:
+  path: vae
+  class_name: AutoencoderKLVAE
+
+caption_text_lookup:
+  type: null
+  path: null
+alt_text_lookup:
+  type: null
+  path: null
+
+dataloader:
+  max_workers: 32
+
+aspect_ratio_bucket: 256

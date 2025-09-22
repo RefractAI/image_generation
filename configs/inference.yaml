@@ -1,0 +1,30 @@
+model:
+  type: ImageModel
+  channels: 4
+  n_layers: 18
+  n_encoder_layers: 16
+  n_heads: 16
+  dim: 896
+  decoder_hidden_size: 64
+  num_text_blocks: 4
+  patch_size: 2
+  use_tread: true
+vae:
+  path: vae
+  class_name: AutoencoderKLVAE
+text_encoder:
+  type: causal_lm
+  path: google/gemma-3-270m
+  max_length: 128
+  txt_embed_dim: 640
+inference:
+  caption: "a calm lake at sunset"
+  cfg: 6.0
+  steps: 200
+  height: 1024
+  width: 1024
+  seed: 42
+  negative_caption: "low quality, blurry"
+io:
+  checkpoint_dir: .
+  output_path: outputs/latest.png

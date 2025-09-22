@@ -1,0 +1,27 @@
+dataset:
+  type: webdataset
+  webdataset:
+    directory: images
+    pattern: %04d.tar
+    min_index: 0
+    max_index: 15
+processing:
+  bucket_size: 256
+  save_threshold: 20000
+  min_caption_length: 5
+  multires: true
+output:
+  cache_dir: cache256animenew
+vae:
+  path: vae
+  class_name: AutoencoderKLVAE
+
+caption_text_lookup:
+  type: null
+  path: null
+alt_text_lookup:
+  type: null
+  path: null
+dataloader:
+  max_workers: null
+aspect_ratio_bucket: 256

@@ -1,0 +1,63 @@
+dataset:
+  path: cache256/combined_dataset
+  type: huggingface_disk
+  image_size: 256
+  multires: true
+  batch_size: 64
+  max_workers: 32
+  latent_field: latents
+  caption_field: tags
+  alt_caption_field: nlprompts
+  alt_caption_min_length: 5
+  alt_caption_probability: 0.7
+  scale_factor: 8
+  image_field: "images"
+model:
+  type: ImageModel
+  channels: 4
+  n_layers: 18
+  n_encoder_layers: 16
+  n_heads: 16
+  dim: 896
+  decoder_hidden_size: 64
+  num_text_blocks: 4
+  patch_size: 2
+  use_tread: true
+  compile: true
+vae:
+  path: vae
+  class_name: AutoencoderKLVAE
+text_encoder:
+  type: causal_lm
+  path: google/gemma-3-270m
+  max_length: 128
+  txt_embed_dim: 640
+optimizer:
+  name: adamw_fused
+  lr: 0.00005
+  warmup_steps: 0
+training:
+  epochs: 500
+  mixed_precision: bf16
+  resume: true
+  save_every: 2000
+  cond_dropout: 0.1
+  clip_grad: 1.0
+  log_window: 10
+  unconditional_caption: ""
+sampling:
+  interval: 2000
+  steps: 50
+  num_samples: 12
+  cfg: 2.0
+logging:
+  checkpoints_dir: checkpoints
+  samples_dir: samples
+  runs_dir: runs
+  track_performance: false
+loop:
+  train_step: default
+  sample_step: default
+losses:
+  mse: 1.0
+  cf: -0.05
